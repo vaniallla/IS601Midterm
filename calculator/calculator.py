@@ -1,17 +1,26 @@
 '''calculator file'''
 
 from importlib import import_module
-import pandas as pd
 import traceback
+import logging
+import os
+import pandas as pd
+
+# Configure logging
+log_level = os.getenv('LOG_LEVEL', 'INFO')
+logging.basicConfig(level=log_level)
 
 class Calculator:
     '''Calculator class'''
     def __init__(self):
         self.history = pd.DataFrame(columns=['Expression', 'Result'])
+        self.logger = logging.getLogger(__name__)
 
     def add_to_history(self, expression, result):
         '''Function to add to history'''
-        self.history.loc[len(self.history)] = [expression, result]
+        self.history = self.history.append({
+            'Expression': expression, 'Result': result}, ignore_index=True)
+        self.logger.info(f"Added expression '{expression}' with result {result} to history.")
 
     def get_history(self):
         '''Function to get history'''
