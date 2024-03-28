@@ -1,48 +1,36 @@
 '''calculator file'''
-# from add import add
-# from subtract import subtract
-# from multiply import multiply
-# from divide import divide
+# from add import AddPlugin
+# from subtract import SubtractPlugin
+# from multiply import MultiplyPlugin
+# from divide import DividePlugin
+
+from importlib import import_module
 
 class Calculator:
-    '''calculator class to store history'''
+    '''calculator class'''
     def __init__(self):
         self.history = []
 
     def add_to_history(self, expression, result):
-        '''function to add calculation to history'''
+        '''add operation to history'''
         self.history.append((expression, result))
 
     def get_history(self):
-        '''function to retrieve history'''
+        '''show history function'''
         return self.history
 
     def clear_history(self):
-        '''function to clear history'''
+        '''clear history function'''
         self.history = []
 
-    def add(self, a, b):
-        '''addition function'''
-        result = a + b
-        self.add_to_history(f"{a} + {b} = {result}", result)
-        return result
-
-    def subtract(self, a, b):
-        '''subtraction function'''
-        result = a - b
-        self.add_to_history(f"{a} - {b} = {result}", result)
-        return result
-
-    def multiply(self, a, b):
-        '''multiply function'''
-        result = a * b
-        self.add_to_history(f"{a} * {b} = {result}", result)
-        return result
-
-    def divide(self, a, b):
-        '''division function'''
-        if b == 0:
-            raise ValueError("Division by zero is not allowed")
-        result = a / b
-        self.add_to_history(f"{a} / {b} = {result}", result)
-        return result
+    def perform_operation(self, operation, a, b):
+        '''operations function'''
+        plugin_name = f"{operation}_plugin"
+        try:
+            plugin_module = import_module(f"plugins.{plugin_name}")
+            plugin = getattr(plugin_module, f"{operation.capitalize()}Plugin")()
+            result = plugin.execute(a, b)
+            self.add_to_history(f"{a} {operation} {b} = {result}", result)
+            return result
+        except ModuleNotFoundError:
+            raise ValueError(f"Plugin for {operation} not found")
