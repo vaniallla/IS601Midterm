@@ -1,30 +1,48 @@
-'''file to start calculator prompts'''
-from add import add
-from subtract import subtract
-from multiply import multiply
-from divide import divide
+'''calculator file'''
+# from add import add
+# from subtract import subtract
+# from multiply import multiply
+# from divide import divide
 
-if __name__ == "__main__":
-    # Example usage
-    num1 = float(input("Enter first number: "))
-    num2 = float(input("Enter second number: "))
+class Calculator:
+    '''calculator class to store history'''
+    def __init__(self):
+        self.history = []
 
-    print("Addition")
-    print("Subtraction")
-    print("Multiplication")
-    print("Division")
-    choice = input("Enter choice (addition, subtraction, multiplication, division): ")
+    def add_to_history(self, expression, result):
+        '''function to add calculation to history'''
+        self.history.append((expression, result))
 
-    if choice == 'addition':
-        print("Result:", add(num1, num2))
-    elif choice == 'subtraction':
-        print("Result:", subtract(num1, num2))
-    elif choice == 'multiplication':
-        print("Result:", multiply(num1, num2))
-    elif choice == 'division':
-        try:
-            print("Result:", divide(num1, num2))
-        except ValueError as e:
-            print("Error:", e)
-    else:
-        print("Invalid choice")
+    def get_history(self):
+        '''function to retrieve history'''
+        return self.history
+
+    def clear_history(self):
+        '''function to clear history'''
+        self.history = []
+
+    def add(self, a, b):
+        '''addition function'''
+        result = a + b
+        self.add_to_history(f"{a} + {b} = {result}", result)
+        return result
+
+    def subtract(self, a, b):
+        '''subtraction function'''
+        result = a - b
+        self.add_to_history(f"{a} - {b} = {result}", result)
+        return result
+
+    def multiply(self, a, b):
+        '''multiply function'''
+        result = a * b
+        self.add_to_history(f"{a} * {b} = {result}", result)
+        return result
+
+    def divide(self, a, b):
+        '''division function'''
+        if b == 0:
+            raise ValueError("Division by zero is not allowed")
+        result = a / b
+        self.add_to_history(f"{a} / {b} = {result}", result)
+        return result
