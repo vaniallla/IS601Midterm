@@ -1,36 +1,43 @@
 '''calculator file'''
-# from add import AddPlugin
-# from subtract import SubtractPlugin
-# from multiply import MultiplyPlugin
-# from divide import DividePlugin
 
 from importlib import import_module
+import pandas as pd
+import traceback
 
 class Calculator:
-    '''calculator class'''
+    '''Calculator class'''
     def __init__(self):
-        self.history = []
+        self.history = pd.DataFrame(columns=['Expression', 'Result'])
 
     def add_to_history(self, expression, result):
-        '''add operation to history'''
-        self.history.append((expression, result))
+        '''Function to add to history'''
+        self.history.loc[len(self.history)] = [expression, result]
 
     def get_history(self):
-        '''show history function'''
+        '''Function to get history'''
         return self.history
 
     def clear_history(self):
-        '''clear history function'''
-        self.history = []
+        '''Function to clear history'''
+        self.history = pd.DataFrame(columns=['Expression', 'Result'])
+
+    def save_history(self, filename):
+        '''Function to save history'''
+        self.history.to_csv(filename, index=False)
+
+    def load_history(self, filename):
+        '''Function to load history'''
+        self.history = pd.read_csv(filename)
 
     def perform_operation(self, operation, a, b):
-        '''operations function'''
+        '''Function to perform operations'''
         plugin_name = f"{operation}_plugin"
         try:
             plugin_module = import_module(f"plugins.{plugin_name}")
             plugin = getattr(plugin_module, f"{operation.capitalize()}Plugin")()
             result = plugin.execute(a, b)
-            self.add_to_history(f"{a} {operation} {b} = {result}", result)
+            self.add_to_history(f"{a} {operation} {b}", result)
             return result
-        except ModuleNotFoundError:
-            raise ValueError(f"Plugin for {operation} not found")
+        except Exception as e:
+            traceback.print_exc()  # Print full traceback
+            raise ValueError(f"Plugin for {operation} not found: {e}")

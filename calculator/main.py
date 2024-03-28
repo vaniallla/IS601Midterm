@@ -8,14 +8,26 @@ if __name__ == "__main__":
     while True:
 
         choice = input("Enter choice (add, subtract, multiply, divide, "
-                       "show history, clear history, exit): ")
+                       "show history, clear history, save history, load history, exit): ")
 
         if choice == 'show history':
-            for i, (expression, result) in enumerate(calculator.get_history(), start=1):
+            print("History:")
+            history_df = calculator.get_history()
+            for i, row in history_df.iterrows():
+                expression = row['Expression']
+                result = row['Result']
                 print(f"{i}. {expression} = {result}")
         elif choice == 'clear history':
             calculator.clear_history()
             print("History cleared.")
+        elif choice == 'save history':
+            filename = input("Enter filename to save history: ")
+            calculator.save_history(filename)
+            print(f"History saved to {filename}")
+        elif choice == 'load history':
+            filename = input("Enter filename to load history from: ")
+            calculator.load_history(filename)
+            print(f"History loaded from {filename}")
         elif choice == 'exit':
             break
         elif choice in ['add', 'subtract', 'multiply', 'divide']:
