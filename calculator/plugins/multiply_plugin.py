@@ -1,4 +1,5 @@
 '''Multiplication class'''
+# pylint: disable=too-few-public-methods
 
 class MultiplyPlugin:
     '''Multiply class'''

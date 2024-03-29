@@ -1,4 +1,5 @@
 '''Addition class'''
+# pylint: disable=too-few-public-methods
 
 class AddPlugin:
     '''Addition class'''

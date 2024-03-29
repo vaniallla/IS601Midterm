@@ -1,4 +1,5 @@
 '''Division class'''
+# pylint: disable=too-few-public-methods
 
 class DividePlugin:
     '''Division Class'''

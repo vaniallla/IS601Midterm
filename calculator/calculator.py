@@ -20,7 +20,7 @@ class Calculator:
         '''Function to add to history'''
         self.history = self.history.append({
             'Expression': expression, 'Result': result}, ignore_index=True)
-        self.logger.info(f"Added expression '{expression}' with result {result} to history.")
+        self.logger.info("Added expression '%s' with result %s to history.", expression, result)
 
     def get_history(self):
         '''Function to get history'''
@@ -49,4 +49,4 @@ class Calculator:
             return result
         except Exception as e:
             traceback.print_exc()  # Print full traceback
-            raise ValueError(f"Plugin for {operation} not found: {e}")
+            raise ValueError(f"Plugin for {operation} not found: {e}") from e
