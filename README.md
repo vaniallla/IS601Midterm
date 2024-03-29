@@ -45,3 +45,6 @@ To install the required dependencies, run: pip install -r requirements.txt
 
 ### Usage
 To start the calculator application, run the following command: python main.py
+
+### Video Link:
+https://drive.google.com/file/d/1Jr9Fy_RUdoQkgPHGof6YM9pWn957EWdQ/view?usp=sharing
