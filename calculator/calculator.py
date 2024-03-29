@@ -18,8 +18,7 @@ class Calculator:
 
     def add_to_history(self, expression, result):
         '''Function to add to history'''
-        self.history = self.history.append({
-            'Expression': expression, 'Result': result}, ignore_index=True)
+        self.history.loc[len(self.history)] = [expression, result]
         self.logger.info("Added expression '%s' with result %s to history.", expression, result)
 
     def get_history(self):
