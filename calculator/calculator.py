@@ -33,6 +33,14 @@ class Calculator:
         '''Function to save history'''
         self.history.to_csv(filename, index=False)
 
+    def delete_file(self, filename):
+        '''Function to delete a file'''
+        try:
+            os.remove(filename)
+            print(f"{filename} has been deleted successfully.")
+        except OSError as e:
+            print(f"Error: {filename} : {e.strerror}")
+
     def load_history(self, filename):
         '''Function to load history'''
         self.history = pd.read_csv(filename)

@@ -8,7 +8,8 @@ if __name__ == "__main__":
     while True:
 
         choice = input("Enter choice (add, subtract, multiply, divide, "
-                       "show history, clear history, save history, load history, exit): ")
+                       "show history, clear history, save history, load history, "
+                       "delete history, exit): ")
 
         if choice == 'show history':
             print("History:")
@@ -28,6 +29,9 @@ if __name__ == "__main__":
             filename = input("Enter filename to load history from: ")
             calculator.load_history(filename)
             print(f"History loaded from {filename}")
+        elif choice == 'delete history':
+            filename = input("Enter filename to delete history: ")
+            calculator.delete_file(filename)
         elif choice == 'exit':
             break
         elif choice in ['add', 'subtract', 'multiply', 'divide']:
